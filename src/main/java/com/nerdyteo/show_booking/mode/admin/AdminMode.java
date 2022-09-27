@@ -30,7 +30,7 @@ public class AdminMode extends Mode {
         final AdminModule module;
         switch (command) {
             case "setup":
-                module = new SetupShowModule();
+                module = SetupShowModule.getInstance();
                 break;
             case "view":
                 module = null;

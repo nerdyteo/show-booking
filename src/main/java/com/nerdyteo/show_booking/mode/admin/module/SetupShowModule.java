@@ -1,11 +1,17 @@
 package com.nerdyteo.show_booking.mode.admin.module;
 
+import com.nerdyteo.show_booking.mode.buyer.BuyerMode;
 import com.nerdyteo.show_booking.show.Cinema;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 
 import java.util.Arrays;
 
 public class SetupShowModule implements AdminModule {
+    private static volatile SetupShowModule instance;
+
+    private SetupShowModule() {
+    }
+
     @Override
     public void execute(String[] parameters) {
         if (parameters.length != 4) {
@@ -46,5 +52,16 @@ public class SetupShowModule implements AdminModule {
         }
 
         Cinema.getInstance().setup(showNumber, numberOfRows, numberOfSeats, cancellationWindowInMinutes);
+    }
+
+    public static SetupShowModule getInstance() {
+        if (instance == null) {
+            synchronized (BuyerMode.class) {
+                if (instance == null) {
+                    instance = new SetupShowModule();
+                }
+            }
+        }
+        return instance;
     }
 }
