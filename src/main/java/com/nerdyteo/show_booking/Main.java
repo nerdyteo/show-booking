@@ -12,21 +12,22 @@ public class Main {
         while (status) {
             printHelp();
             final String input = CommandLineUtil.getInput();
-            if (input != null) {
-                switch (input) {
-                    case "1":
-                        LoggingUtil.info("Entering Admin Mode");
-                        AdminMode.getInstance().execute();
-                        break;
-                    case "2":
-                        LoggingUtil.info("Entering Buyer Mode");
-                        BuyerMode.getInstance().execute();
-                        break;
-                    case "3":
-                        LoggingUtil.info("Exiting Show Booking Program");
-                        status = false;
-                        break;
-                }
+            if (input == null)
+                continue;
+
+            switch (input) {
+                case "1":
+                    LoggingUtil.info("Entering Admin Mode");
+                    AdminMode.getInstance().execute();
+                    break;
+                case "2":
+                    LoggingUtil.info("Entering Buyer Mode");
+                    BuyerMode.getInstance().execute();
+                    break;
+                case "3":
+                    LoggingUtil.info("Exiting Show Booking Program");
+                    status = false;
+                    break;
             }
         }
     }
