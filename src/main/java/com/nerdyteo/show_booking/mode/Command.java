@@ -21,7 +21,7 @@ public class Command {
     }
 
     public boolean hasCommand() {
-        return this.command != null;
+        return this.command != null && this.command.length() > 0;
     }
 
     public String getCommand() {
