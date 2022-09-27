@@ -2,7 +2,10 @@ package com.nerdyteo.show_booking.mode.admin;
 
 import com.nerdyteo.show_booking.mode.Mode;
 import com.nerdyteo.show_booking.mode.admin.module.AdminModule;
+import com.nerdyteo.show_booking.mode.admin.module.SetupShowModule;
 import com.nerdyteo.show_booking.util.LoggingUtil;
+
+import java.util.Arrays;
 
 public class AdminMode extends Mode {
 
@@ -24,20 +27,26 @@ public class AdminMode extends Mode {
         }
 
         final String command = parsedCommands[0].toLowerCase();
-
+        final AdminModule module;
         switch (command) {
             case "setup":
+                module = new SetupShowModule();
                 break;
             case "view":
+                module = null;
                 break;
             case "add":
+                module = null;
                 break;
             case "exit":
                 return false;
             default:
                 LoggingUtil.error("Invalid command.");
+                module = null;
                 break;
         }
+        if (module != null)
+            module.execute(Arrays.copyOfRange(parsedCommands, 1, parsedCommands.length));
         return true;
     }
 
