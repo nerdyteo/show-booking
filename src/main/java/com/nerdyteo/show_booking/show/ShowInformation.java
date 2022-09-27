@@ -38,7 +38,18 @@ public class ShowInformation {
 
     public void viewAll() {
         LoggingUtil.info("Viewing all seats information for Show #" + this.number);
-        this.seatsMap.values().forEach(Seat::view);
+        this.seatsMap.keySet()
+                .stream()
+                .sorted((o1, o2) -> {
+                    final char[] first = o1.toCharArray();
+                    final char[] second = o2.toCharArray();
+                    if (first[0] == second[0] && first.length != second.length)
+                        return first.length - second.length;
+
+                    return o1.compareTo(o2);
+                })
+                .map(seatsMap::get)
+                .forEachOrdered(Seat::view);
         LoggingUtil.info("Successfully displayed all seats information for Show #" + this.number);
     }
 
