@@ -22,7 +22,7 @@ public class Cinema {
         cancellationWindowsValidation = window -> MAX_CANCELLATION_WINDOWS_MINUTES >= window && window >= 1;
     }
 
-    private final HashMap<ShowNumber, ShowInformation> showMapping;
+    private final HashMap<Long, ShowInformation> showMapping;
 
     private Cinema() {
         this.showMapping = new HashMap<>();
@@ -50,9 +50,10 @@ public class Cinema {
             return;
         }
 
-        this.showMapping.put(new ShowNumber(showNumber), new ShowInformation(showNumber, numberOfRows, numberOfSeats, cancellationWindowsMinutes));
+        this.showMapping.put(showNumber, new ShowInformation(showNumber, numberOfRows, numberOfSeats, cancellationWindowsMinutes));
         LoggingUtil.info("Successfully added Show #" + showNumber + " that has " + numberOfRows + " rows with " + numberOfSeats + " seats and a cancellation window of " + cancellationWindowsMinutes + " minutes.");
     }
+
 
     public static Cinema getInstance() {
         if (instance == null) {
