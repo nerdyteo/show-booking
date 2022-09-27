@@ -2,6 +2,7 @@ package com.nerdyteo.show_booking.mode.admin.module;
 
 import com.nerdyteo.show_booking.mode.buyer.BuyerMode;
 import com.nerdyteo.show_booking.show.Cinema;
+import com.nerdyteo.show_booking.util.ConversionUtil;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 
 import java.util.Arrays;
@@ -16,11 +17,9 @@ public class ViewShowModule implements AdminModule {
             return;
         }
 
-        final long showNumber;
-        try {
-            showNumber = Long.parseLong(parameters[0]);
-        } catch (Exception error) {
-            LoggingUtil.error("Invalid Show Number Format. Please ensure Show Number numerical.");
+        final Long showNumber = ConversionUtil.toLong(parameters[0]);
+        if (showNumber == null) {
+            LoggingUtil.error("Invalid Show Number");
             return;
         }
 

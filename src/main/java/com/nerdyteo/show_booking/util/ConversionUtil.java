@@ -9,4 +9,12 @@ public class ConversionUtil {
             return null;
         }
     }
+
+    public static Integer toInt(final String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (Exception error) {
+            return null;
+        }
+    }
 }

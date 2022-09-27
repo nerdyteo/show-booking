@@ -2,6 +2,7 @@ package com.nerdyteo.show_booking.mode.admin.module;
 
 import com.nerdyteo.show_booking.mode.buyer.BuyerMode;
 import com.nerdyteo.show_booking.show.Cinema;
+import com.nerdyteo.show_booking.util.ConversionUtil;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 
 import java.util.Arrays;
@@ -19,35 +20,29 @@ public class SetupShowModule implements AdminModule {
             return;
         }
 
-        final long showNumber;
-        try {
-            showNumber = Long.parseLong(parameters[0]);
-        } catch (Exception error) {
-            LoggingUtil.error("Invalid Show Number Format. Please ensure Show Number numerical.");
+        final Long showNumber = ConversionUtil.toLong(parameters[0]);
+        if (showNumber == null) {
+            LoggingUtil.error("Invalid Show Number");
             return;
         }
 
-        final int numberOfRows;
-        try {
-            numberOfRows = Integer.parseInt(parameters[1]);
-        } catch (Exception error) {
-            LoggingUtil.error("Invalid Number Of Rows Format. Please ensure Number of Rows are numerical.");
+
+        final Integer numberOfRows = ConversionUtil.toInt(parameters[1]);
+        if (numberOfRows == null) {
+            LoggingUtil.error("Invalid Number of Rows");
             return;
         }
 
-        final int numberOfSeats;
-        try {
-            numberOfSeats = Integer.parseInt(parameters[2]);
-        } catch (Exception error) {
-            LoggingUtil.error("Invalid Number Of seats per row Format. Please ensure Number Of seats per row are numerical.");
+
+        final Integer numberOfSeats = ConversionUtil.toInt(parameters[2]);
+        if (numberOfSeats == null) {
+            LoggingUtil.error("Invalid Number of Seats");
             return;
         }
 
-        final int cancellationWindowInMinutes;
-        try {
-            cancellationWindowInMinutes = Integer.parseInt(parameters[3]);
-        } catch (Exception error) {
-            LoggingUtil.error("Invalid Cancellation window in minutes Format. Please ensure Cancellation window in minutes are numerical.");
+        final Integer cancellationWindowInMinutes = ConversionUtil.toInt(parameters[3]);
+        if (cancellationWindowInMinutes == null) {
+            LoggingUtil.error("Invalid Cancellation window in minutes");
             return;
         }
 
