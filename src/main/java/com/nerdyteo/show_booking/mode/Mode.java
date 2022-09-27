@@ -4,7 +4,7 @@ import com.nerdyteo.show_booking.util.CommandLineUtil;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 
 public abstract class Mode {
-    protected abstract boolean execute(String command);
+    protected abstract void execute(String command);
 
     protected abstract String getHelpMessage();
 

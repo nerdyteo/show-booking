@@ -16,15 +16,15 @@ public class AdminMode extends Mode {
     }
 
     @Override
-    protected boolean execute(final String rawCommand) {
+    protected void execute(final String rawCommand) {
         if (rawCommand == null)
-            return true;
+            return;
 
         final String[] parsedCommands = rawCommand.split(" ");
 
         if (parsedCommands.length < 1) {
             LoggingUtil.error("Please enter a command.");
-            return true;
+            return;
         }
 
         final String command = parsedCommands[0].toLowerCase();
@@ -38,12 +38,10 @@ public class AdminMode extends Mode {
                 break;
             default:
                 LoggingUtil.error("Invalid command.");
-                module = null;
-                break;
+                return;
         }
-        if (module != null)
-            module.execute(Arrays.copyOfRange(parsedCommands, 1, parsedCommands.length));
-        return true;
+
+        module.execute(Arrays.copyOfRange(parsedCommands, 1, parsedCommands.length));
     }
 
     @Override
