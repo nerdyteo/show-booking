@@ -2,6 +2,9 @@ package com.nerdyteo.show_booking.mode.buyer;
 
 import com.nerdyteo.show_booking.mode.Command;
 import com.nerdyteo.show_booking.mode.Mode;
+import com.nerdyteo.show_booking.mode.buyer.module.BuyerModule;
+import com.nerdyteo.show_booking.mode.buyer.module.ViewAllShowModule;
+import com.nerdyteo.show_booking.util.LoggingUtil;
 
 public class BuyerMode extends Mode {
 
@@ -9,6 +12,16 @@ public class BuyerMode extends Mode {
 
     @Override
     protected void execute(Command command) {
+        final BuyerModule module;
+        switch (command.getCommand()) {
+            case "view":
+                module = ViewAllShowModule.getInstance();
+                break;
+            default:
+                LoggingUtil.error("Invalid command.");
+                return;
+        }
+        module.execute(command.getParameters());
     }
 
     @Override
@@ -22,9 +35,7 @@ public class BuyerMode extends Mode {
                 "\t\t- Book <Show Number> <Phone#> <Comma separated list of seats>\n" +
                 "\t\t\t(To book a seat in a show. Ticket # will be displayed if successful)\n" +
                 "\t\t- Cancel <Ticket#>  <Phone#>\n" +
-                "\t\t\t(To cancel a ticket.)\n" +
-                "\t\t- Exit\n" +
-                "\t\t\t(To exit Admin Mode and return to Mode Selection Window)";
+                "\t\t\t(To cancel a ticket.)\n";
     }
 
     public static BuyerMode getInstance() {

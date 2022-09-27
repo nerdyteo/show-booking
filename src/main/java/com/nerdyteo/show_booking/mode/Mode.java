@@ -11,7 +11,7 @@ public abstract class Mode {
     private void print() {
         final StringBuilder message = new StringBuilder(getHelpMessage());
         message.append("\t\t- Exit\n" +
-                "\t\t\t(To exit Admin Mode and return to Mode Selection Window)\n");
+                "\t\t\t(Return to Mode Selection Window)\n");
         LoggingUtil.print(message.toString());
     }
 

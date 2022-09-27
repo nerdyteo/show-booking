@@ -63,6 +63,16 @@ public class Cinema {
         this.showMapping.get(showNumber).viewAll();
     }
 
+    public void available() {
+        LoggingUtil.info("Displaying all available shows");
+        if (this.showMapping.size() > 0) {
+            this.showMapping.keySet()
+                    .stream()
+                    .forEachOrdered(showNumber -> LoggingUtil.println("* ", String.valueOf(showNumber)));
+        } else
+            LoggingUtil.println("[No shows are currently available]");
+        LoggingUtil.info("Successfully displayed all shows");
+    }
 
     public static Cinema getInstance() {
         if (instance == null) {
