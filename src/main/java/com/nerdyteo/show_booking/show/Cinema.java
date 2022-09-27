@@ -74,6 +74,14 @@ public class Cinema {
         LoggingUtil.info("Successfully displayed all shows");
     }
 
+    public void available(final long showNumber) {
+        if (!this.showMapping.containsKey(showNumber)) {
+            LoggingUtil.error("Show #" + showNumber + " does not exist.");
+            return;
+        }
+        this.showMapping.get(showNumber).available();
+    }
+
     public static Cinema getInstance() {
         if (instance == null) {
             synchronized (BuyerMode.class) {

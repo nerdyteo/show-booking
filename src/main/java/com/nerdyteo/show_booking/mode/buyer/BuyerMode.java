@@ -2,6 +2,7 @@ package com.nerdyteo.show_booking.mode.buyer;
 
 import com.nerdyteo.show_booking.mode.Command;
 import com.nerdyteo.show_booking.mode.Mode;
+import com.nerdyteo.show_booking.mode.buyer.module.AvailableSeatsModule;
 import com.nerdyteo.show_booking.mode.buyer.module.BuyerModule;
 import com.nerdyteo.show_booking.mode.buyer.module.ViewAllShowModule;
 import com.nerdyteo.show_booking.util.LoggingUtil;
@@ -16,6 +17,9 @@ public class BuyerMode extends Mode {
         switch (command.getCommand()) {
             case "view":
                 module = ViewAllShowModule.getInstance();
+                break;
+            case "availability":
+                module = AvailableSeatsModule.getInstance();
                 break;
             default:
                 LoggingUtil.error("Invalid command.");

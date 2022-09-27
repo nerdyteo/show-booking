@@ -5,6 +5,7 @@ import com.nerdyteo.show_booking.util.LoggingUtil;
 
 import java.util.*;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class ShowInformation {
 
@@ -38,7 +39,26 @@ public class ShowInformation {
 
     public void viewAll() {
         LoggingUtil.info("Viewing all seats information for Show #" + this.number);
-        this.seatsMap.keySet()
+        sortedSeatKeys()
+                .map(seatsMap::get)
+                .forEachOrdered(Seat::view);
+        LoggingUtil.info("Successfully displayed all seats information for Show #" + this.number);
+    }
+
+    public void available() {
+        LoggingUtil.info("Available seats for Show #" + this.number + ":");
+        sortedSeatKeys()
+                .map(seatsMap::get)
+                .filter(seat -> !seat.isBooked())
+                .forEachOrdered(seat -> LoggingUtil.println("* ", seat.getSeatNumber()));
+    }
+
+    public boolean hasSeat(String seatNumber) {
+        return this.seatsMap.containsKey(seatNumber);
+    }
+
+    private Stream<String> sortedSeatKeys() {
+        return this.seatsMap.keySet()
                 .stream()
                 .sorted((o1, o2) -> {
                     final char[] first = o1.toCharArray();
@@ -47,15 +67,7 @@ public class ShowInformation {
                         return first.length - second.length;
 
                     return o1.compareTo(o2);
-                })
-                .map(seatsMap::get)
-                .forEachOrdered(Seat::view);
-        LoggingUtil.info("Successfully displayed all seats information for Show #" + this.number);
-    }
-
-
-    public boolean hasSeat(String seatNumber) {
-        return this.seatsMap.containsKey(seatNumber);
+                });
     }
 }
 
