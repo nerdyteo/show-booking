@@ -1,18 +1,29 @@
 package com.nerdyteo.show_booking.mode;
 
 import com.nerdyteo.show_booking.util.CommandLineUtil;
+import com.nerdyteo.show_booking.util.LoggingUtil;
 
 public abstract class Mode {
     protected abstract boolean execute(String command);
 
-    protected abstract void printHelp();
+    protected abstract String getHelpMessage();
+
+    private void print() {
+        final StringBuilder message = new StringBuilder(getHelpMessage());
+        message.append("\t\t- Exit\n" +
+                "\t\t\t(To exit Admin Mode and return to Mode Selection Window)\n");
+        LoggingUtil.print(message.toString());
+    }
 
     public void execute() {
-        boolean status = true;
-        while (status) {
-            printHelp();
+        while (true) {
+            print();
             final String command = CommandLineUtil.getInput();
-            status = execute(command);
+            if (command != null) {
+                if (command.equals("exit"))
+                    return;
+                execute(command);
+            }
         }
     }
 }

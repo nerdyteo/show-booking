@@ -36,8 +36,6 @@ public class AdminMode extends Mode {
             case "view":
                 module = ViewShowModule.getInstance();
                 break;
-            case "exit":
-                return false;
             default:
                 LoggingUtil.error("Invalid command.");
                 module = null;
@@ -49,15 +47,13 @@ public class AdminMode extends Mode {
     }
 
     @Override
-    protected void printHelp() {
-        LoggingUtil.println("[ADMIN MODE]\n" +
+    protected String getHelpMessage() {
+        return "[Admin Mode]\n" +
                 "\tAvailable Commands:\n" +
                 "\t\t- Setup <Show Number> <Number of Rows> <Number of seats per row>  <Cancellation window in minutes>\n" +
                 "\t\t\t(To setup the number of seats per show)\n" +
                 "\t\t- View <Show Number>\n" +
-                "\t\t\t(To display Show Number, Ticket#, Buyer Phone#, Seat Numbers allocated)\n" +
-                "\t\t- Exit\n" +
-                "\t\t\t(To exit Admin Mode and return to Mode Selection Window)");
+                "\t\t\t(To display Show Number, Ticket#, Buyer Phone#, Seat Numbers allocated)\n";
     }
 
 

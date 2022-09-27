@@ -12,8 +12,8 @@ public class BuyerMode extends Mode {
     }
 
     @Override
-    protected void printHelp() {
-
+    protected String getHelpMessage() {
+        return "";
     }
 
     public static BuyerMode getInstance() {
