@@ -10,7 +10,7 @@ public class AdminMode extends Mode {
     }
 
     @Override
-    protected boolean commands() {
+    protected boolean execute(String command) {
         return false;
     }
 

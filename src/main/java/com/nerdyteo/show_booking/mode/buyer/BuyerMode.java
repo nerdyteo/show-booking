@@ -6,9 +6,8 @@ public class BuyerMode extends Mode {
 
     private static volatile BuyerMode instance;
 
-
     @Override
-    protected boolean commands() {
+    protected boolean execute(String command) {
         return false;
     }
 

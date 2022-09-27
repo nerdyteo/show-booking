@@ -1,7 +1,9 @@
 package com.nerdyteo.show_booking.mode;
 
+import com.nerdyteo.show_booking.util.CommandLineUtil;
+
 public abstract class Mode {
-    protected abstract boolean commands();
+    protected abstract boolean execute(String command);
 
     protected abstract void printHelp();
 
@@ -9,8 +11,8 @@ public abstract class Mode {
         boolean status = true;
         while (status) {
             printHelp();
-            status = commands();
-
+            final String command = CommandLineUtil.getInput();
+            status = execute(command);
         }
     }
 }
