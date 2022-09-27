@@ -35,9 +35,6 @@ public class AdminMode extends Mode {
             case "view":
                 module = null;
                 break;
-            case "add":
-                module = null;
-                break;
             case "exit":
                 return false;
             default:
@@ -58,8 +55,6 @@ public class AdminMode extends Mode {
                 "\t\t\t(To setup the number of seats per show)\n" +
                 "\t\t- View <Show Number>\n" +
                 "\t\t\t(To display Show Number, Ticket#, Buyer Phone#, Seat Numbers allocated)\n" +
-                "\t\t- Add <Show Number> <Number of Rows>\n" +
-                "\t\t\t(To add additional rows to show number with a maximum of 26 rows)\n" +
                 "\t\t- Exit\n" +
                 "\t\t\t(To exit Admin Mode and return to Mode Selection Window)");
     }
