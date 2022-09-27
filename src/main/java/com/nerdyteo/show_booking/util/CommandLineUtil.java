@@ -25,7 +25,7 @@ public class CommandLineUtil {
                     return null;
                 }
             }
-            return inputBuilder.toString();
+            return inputBuilder.toString().trim();
         } catch (IOException e) {
             LoggingUtil.error("Failed to acquire input from user. Message: " + e.getMessage());
             return null;
