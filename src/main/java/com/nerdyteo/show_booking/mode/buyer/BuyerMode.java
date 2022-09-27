@@ -1,5 +1,6 @@
 package com.nerdyteo.show_booking.mode.buyer;
 
+import com.nerdyteo.show_booking.mode.Command;
 import com.nerdyteo.show_booking.mode.Mode;
 
 public class BuyerMode extends Mode {
@@ -7,7 +8,7 @@ public class BuyerMode extends Mode {
     private static volatile BuyerMode instance;
 
     @Override
-    protected void execute(String command) {
+    protected void execute(Command command) {
     }
 
     @Override

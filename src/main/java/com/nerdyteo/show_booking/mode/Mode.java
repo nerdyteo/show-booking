@@ -4,7 +4,7 @@ import com.nerdyteo.show_booking.util.CommandLineUtil;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 
 public abstract class Mode {
-    protected abstract void execute(String command);
+    protected abstract void execute(Command command);
 
     protected abstract String getHelpMessage();
 
@@ -18,10 +18,15 @@ public abstract class Mode {
     public void execute() {
         while (true) {
             print();
-            final String command = CommandLineUtil.getInput();
-            if (command != null) {
-                if (command.equals("exit"))
+            final String raw = CommandLineUtil.getInput();
+            if (raw != null) {
+                if (raw.equals("exit"))
                     return;
+                final Command command = new Command(raw);
+                if (!command.hasCommand()) {
+                    LoggingUtil.error("Please enter a command.");
+                    continue;
+                }
                 execute(command);
             }
         }
