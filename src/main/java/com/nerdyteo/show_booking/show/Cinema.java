@@ -54,6 +54,15 @@ public class Cinema {
         LoggingUtil.info("Successfully added Show #" + showNumber + " that has " + numberOfRows + " rows with " + numberOfSeats + " seats and a cancellation window of " + cancellationWindowsMinutes + " minutes.");
     }
 
+    public void view(final long showNumber) {
+        if (!this.showMapping.containsKey(showNumber)) {
+            LoggingUtil.error("Show #" + showNumber + " does not exist.");
+            return;
+        }
+
+        this.showMapping.get(showNumber).viewAll();
+    }
+
 
     public static Cinema getInstance() {
         if (instance == null) {

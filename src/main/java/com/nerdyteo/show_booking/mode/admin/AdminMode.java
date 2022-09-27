@@ -3,6 +3,7 @@ package com.nerdyteo.show_booking.mode.admin;
 import com.nerdyteo.show_booking.mode.Mode;
 import com.nerdyteo.show_booking.mode.admin.module.AdminModule;
 import com.nerdyteo.show_booking.mode.admin.module.SetupShowModule;
+import com.nerdyteo.show_booking.mode.admin.module.ViewShowModule;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 
 import java.util.Arrays;
@@ -33,7 +34,7 @@ public class AdminMode extends Mode {
                 module = SetupShowModule.getInstance();
                 break;
             case "view":
-                module = null;
+                module = ViewShowModule.getInstance();
                 break;
             case "exit":
                 return false;

@@ -1,6 +1,8 @@
 package com.nerdyteo.show_booking.show;
 
 
+import com.nerdyteo.show_booking.util.LoggingUtil;
+
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -32,6 +34,12 @@ public class ShowInformation {
                             });
                 });
         this.seatsMap = Collections.unmodifiableMap(seatMapBuffer);
+    }
+
+    public void viewAll() {
+        LoggingUtil.info("Viewing all seats information for Show #" + this.number);
+        this.seatsMap.values().forEach(Seat::view);
+        LoggingUtil.info("Successfully displayed all seats information for Show #" + this.number);
     }
 
 
