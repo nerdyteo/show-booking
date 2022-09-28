@@ -73,6 +73,27 @@ public class ShowInformation {
         this.ticketWindowMapping.put(ticketNumber, cancellableWindow);
     }
 
+    public List<String> cancel(final String ticketNumber) {
+        if (!this.ticketWindowMapping.containsKey(ticketNumber)) {
+            LoggingUtil.info("Ticket cancellation window had expired.");
+            return null;
+        }
+
+        final DateTime now = DateTime.now();
+        if (now.isAfter(this.ticketWindowMapping.get(ticketNumber))) {
+            this.ticketWindowMapping.remove(ticketNumber);
+            LoggingUtil.info("Ticket cancellation window had expired.");
+            return null;
+        }
+
+        return this.sortedSeatKeys()
+                .map(seatsMap::get)
+                .filter(Seat::isBooked)
+                .filter(seat -> seat.cancel(ticketNumber))
+                .map(Seat::getSeatNumber)
+                .collect(Collectors.toList());
+    }
+
     private Stream<String> sortedSeatKeys() {
         return this.seatsMap.keySet()
                 .stream()

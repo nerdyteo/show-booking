@@ -29,12 +29,15 @@ public class Cinema {
     }
 
     private final HashMap<Long, ShowInformation> showMapping;
+    private final HashMap<String, Long> showNumberHashMapping;
+
 
     private Cinema() {
         this.showMapping = new HashMap<>();
+        this.showNumberHashMapping = new HashMap<>();
     }
 
-    public void setup(final long showNumber, final int numberOfRows, final int numberOfSeats, final int cancellationWindowsMinutes) {
+    public void setup(final Long showNumber, final int numberOfRows, final int numberOfSeats, final int cancellationWindowsMinutes) {
         // Validation
         if (!rowValidation.test(numberOfRows)) {
             LoggingUtil.error("Number of rows must be between 1 and " + MAX_ROWS + " (inclusive).");
@@ -57,6 +60,7 @@ public class Cinema {
         }
 
         this.showMapping.put(showNumber, new ShowInformation(showNumber, numberOfRows, numberOfSeats, cancellationWindowsMinutes));
+        this.showNumberHashMapping.put(String.valueOf(showNumber.hashCode()), showNumber);
         LoggingUtil.info("Successfully added Show #" + showNumber + " that has " + numberOfRows + " rows with " + numberOfSeats + " seats and a cancellation window of " + cancellationWindowsMinutes + " minutes.");
     }
 
@@ -106,6 +110,16 @@ public class Cinema {
             LoggingUtil.error("Failed to book ticket. Message: " + error.getMessage());
             return null;
         }
+    }
+
+    public List<String> cancel(final String ticketNumber, final String showNumberHash) {
+        if (!showNumberHashMapping.containsKey(showNumberHash)) {
+            LoggingUtil.error("Invalid Ticket Detected.");
+            return null;
+        }
+
+        final long showNumber = this.showNumberHashMapping.get(showNumberHash);
+        return this.showMapping.get(showNumber).cancel(ticketNumber);
     }
 
     public static Cinema getInstance() {

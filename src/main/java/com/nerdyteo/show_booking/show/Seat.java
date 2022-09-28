@@ -18,8 +18,16 @@ public class Seat {
         return this.booking != null;
     }
 
-    public void book(final String ticketNumber, final String phoneNumber, final DateTime cancellationWindow) {
-        this.booking = new Ticket(ticketNumber, phoneNumber, cancellationWindow);
+    public void book(final String ticketNumber, final String phoneNumber) {
+        this.booking = new Ticket(ticketNumber, phoneNumber);
+    }
+
+    public boolean cancel(final String ticketNumber) {
+        if (this.booking != null && booking.getTicketNumber().equals(ticketNumber)) {
+            this.booking = null;
+            return true;
+        }
+        return false;
     }
 
     public void view() {
