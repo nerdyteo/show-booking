@@ -57,7 +57,7 @@ public class ShowComponentsUnitTest {
     }
 
     @Test
-    void bookingNonValidSeats(){
+    void bookingNonValidSeats() {
         final long showNumber = 1211;
         final int numberOfRows = 4;
         final int numberOfSeats = 4;
@@ -66,5 +66,18 @@ public class ShowComponentsUnitTest {
         final List<String> seatsToBook = Arrays.asList("Z1", "Y4", "X2", "W3");
         final String ticketNumber = cinema.book(showNumber, "999", seatsToBook);
         Assertions.assertEquals(null, ticketNumber, "Ticket number is given despite invalid seats are chosen");
+    }
+
+    @Test
+    void bookingUnavailableSeats() {
+        final long showNumber = 1211;
+        final int numberOfRows = 4;
+        final int numberOfSeats = 4;
+        final Cinema cinema = Cinema.getInstance();
+        cinema.setup(showNumber, numberOfRows, numberOfSeats, 2);
+        final List<String> seatsToBook = Arrays.asList("A1", "B4", "C2", "D3");
+        cinema.book(showNumber, "9999", seatsToBook);
+        final String ticketNumber = cinema.book(showNumber, "9999", seatsToBook);
+        Assertions.assertEquals(null, ticketNumber, "Ticket number is given despite unavailable seats are chosen");
     }
 }
