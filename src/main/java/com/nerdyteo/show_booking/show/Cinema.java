@@ -5,6 +5,7 @@ import com.nerdyteo.show_booking.util.LoggingUtil;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public class Cinema {
@@ -64,15 +65,8 @@ public class Cinema {
         return this.showMapping.get(showNumber).getSeats();
     }
 
-    public void available() {
-        LoggingUtil.info("Displaying all available shows");
-        if (this.showMapping.size() > 0) {
-            this.showMapping.keySet()
-                    .stream()
-                    .forEachOrdered(showNumber -> LoggingUtil.println("* ", String.valueOf(showNumber)));
-        } else
-            LoggingUtil.println("[No shows are currently available]");
-        LoggingUtil.info("Successfully displayed all shows");
+    public Set<Long> available() {
+        return this.showMapping.keySet();
     }
 
     public List<Seat> available(final long showNumber) {
