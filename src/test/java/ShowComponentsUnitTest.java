@@ -36,9 +36,9 @@ public class ShowComponentsUnitTest {
                     return identity;
                 })
                 .stream()
-                .allMatch(seat -> showInformation.hasSeat(seat));
+                .allMatch(showInformation::hasSeat);
 
-        Assertions.assertEquals(true, result, "Show seats are not generated properly");
+        Assertions.assertTrue(result, "Show seats are not generated properly");
     }
 
     @Test
@@ -50,10 +50,10 @@ public class ShowComponentsUnitTest {
         cinema.setup(showNumber, numberOfRows, numberOfSeats, 2);
         final List<String> seatsToBook = Arrays.asList("A1", "B4", "C2", "D3");
         cinema.book(showNumber, "9999", seatsToBook);
-        final boolean result = cinema.available()
+        final boolean result = cinema.available(showNumber)
                 .stream()
                 .anyMatch(seatsToBook::contains);
-        Assertions.assertEquals(false, result, "Not all seats have been booked");
+        Assertions.assertFalse(result, "Not all seats have been booked");
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ShowComponentsUnitTest {
         cinema.setup(showNumber, numberOfRows, numberOfSeats, 2);
         final List<String> seatsToBook = Arrays.asList("Z1", "Y4", "X2", "W3");
         final String ticketNumber = cinema.book(showNumber, "999", seatsToBook);
-        Assertions.assertEquals(null, ticketNumber, "Ticket number is given despite invalid seats are chosen");
+        Assertions.assertNull(ticketNumber, "Ticket number is given despite invalid seats are chosen");
     }
 
     @Test
@@ -78,6 +78,6 @@ public class ShowComponentsUnitTest {
         final List<String> seatsToBook = Arrays.asList("A1", "B4", "C2", "D3");
         cinema.book(showNumber, "9999", seatsToBook);
         final String ticketNumber = cinema.book(showNumber, "9999", seatsToBook);
-        Assertions.assertEquals(null, ticketNumber, "Ticket number is given despite unavailable seats are chosen");
+        Assertions.assertNull(ticketNumber, "Ticket number is given despite unavailable seats are chosen");
     }
 }
