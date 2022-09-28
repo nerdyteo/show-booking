@@ -1,9 +1,12 @@
+import com.nerdyteo.show_booking.show.Cinema;
 import com.nerdyteo.show_booking.show.Seat;
 import com.nerdyteo.show_booking.show.ShowInformation;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,4 +43,20 @@ public class TestShowComponents {
 
         Assertions.assertEquals(true, result, "Show seats are not generated properly");
     }
+
+    @Test
+    void bookingPositiveTest() {
+        final long showNumber = 1211;
+        final int numberOfRows = 4;
+        final int numberOfSeats = 4;
+        final Cinema cinema = Cinema.getInstance();
+        cinema.setup(showNumber, numberOfRows, numberOfSeats, 2);
+        final List<String> seatsToBook = Arrays.asList("A1", "B4", "C2", "D3");
+        cinema.book(showNumber, "9999", seatsToBook);
+        final boolean result = cinema.available()
+                .stream()
+                .anyMatch(seatsToBook::contains);
+        Assertions.assertEquals(false, result, "Not all seats have been booked");
+    }
+    
 }
