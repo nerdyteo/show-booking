@@ -1,20 +1,15 @@
 package com.nerdyteo.show_booking.show;
 
-import java.time.LocalDateTime;
-import java.util.StringJoiner;
+import org.joda.time.DateTime;
+
 
 public class Ticket {
-    public static final String TICKET_NUMBER_DELIMITER = "-";
     private final String ticketNumber;
     private final String phoneNumber;
-    private final LocalDateTime cancellationWindow;
+    private final DateTime cancellationWindow;
 
-    public Ticket(final Long showNumber, final String seatNumber, String phoneNumber, final LocalDateTime cancellationWindow) {
-        final StringJoiner ticketNumberBuilder = new StringJoiner(TICKET_NUMBER_DELIMITER);
-        ticketNumberBuilder.add(Integer.toString(showNumber.hashCode()));
-        ticketNumberBuilder.add(seatNumber);
-        ticketNumberBuilder.add(Integer.toString(phoneNumber.hashCode()));
-        this.ticketNumber = ticketNumberBuilder.toString();
+    public Ticket(final String ticketNumber, final String phoneNumber, final DateTime cancellationWindow) {
+        this.ticketNumber = ticketNumber;
         this.phoneNumber = phoneNumber;
         this.cancellationWindow = cancellationWindow;
     }
@@ -28,7 +23,7 @@ public class Ticket {
     }
 
     public boolean isCancellable() {
-        final LocalDateTime now = LocalDateTime.now();
+        final DateTime now = DateTime.now();
         return now.isBefore(this.cancellationWindow);
     }
 }
