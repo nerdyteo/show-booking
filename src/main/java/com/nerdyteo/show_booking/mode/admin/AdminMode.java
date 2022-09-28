@@ -7,8 +7,6 @@ import com.nerdyteo.show_booking.mode.admin.module.SetupShowModule;
 import com.nerdyteo.show_booking.mode.admin.module.ViewShowModule;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 
-import java.util.Arrays;
-
 public class AdminMode extends Mode {
 
     private static volatile AdminMode instance;

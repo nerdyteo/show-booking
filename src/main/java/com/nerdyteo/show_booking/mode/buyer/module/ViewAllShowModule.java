@@ -5,7 +5,6 @@ import com.nerdyteo.show_booking.mode.buyer.BuyerMode;
 import com.nerdyteo.show_booking.show.Cinema;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 
-import java.util.List;
 import java.util.Set;
 
 public class ViewAllShowModule implements BuyerModule {

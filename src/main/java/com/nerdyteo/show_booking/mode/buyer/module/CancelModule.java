@@ -3,7 +3,6 @@ package com.nerdyteo.show_booking.mode.buyer.module;
 import com.nerdyteo.show_booking.mode.buyer.BuyerMode;
 import com.nerdyteo.show_booking.show.Cinema;
 import com.nerdyteo.show_booking.show.ParsedTicketNumber;
-import com.nerdyteo.show_booking.util.ConversionUtil;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 import com.nerdyteo.show_booking.util.TicketUtil;
 import org.apache.commons.lang3.StringUtils;

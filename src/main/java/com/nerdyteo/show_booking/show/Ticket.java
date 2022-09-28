@@ -1,8 +1,5 @@
 package com.nerdyteo.show_booking.show;
 
-import org.joda.time.DateTime;
-
-
 public class Ticket {
     private final String ticketNumber;
     private final String phoneNumber;

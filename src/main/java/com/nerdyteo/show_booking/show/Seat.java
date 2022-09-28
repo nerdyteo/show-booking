@@ -1,8 +1,6 @@
 package com.nerdyteo.show_booking.show;
 
-import com.nerdyteo.show_booking.show.Ticket;
 import com.nerdyteo.show_booking.util.LoggingUtil;
-import org.joda.time.DateTime;
 
 public class Seat {
 

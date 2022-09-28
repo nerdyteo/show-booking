@@ -5,7 +5,6 @@ import com.nerdyteo.show_booking.util.LoggingUtil;
 import com.nerdyteo.show_booking.util.TicketUtil;
 import org.joda.time.DateTime;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
