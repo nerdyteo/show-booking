@@ -4,6 +4,7 @@ package com.nerdyteo.show_booking.show;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -37,12 +38,10 @@ public class ShowInformation {
         this.seatsMap = Collections.unmodifiableMap(seatMapBuffer);
     }
 
-    public void viewAll() {
-        LoggingUtil.info("Viewing all seats information for Show #" + this.number);
-        sortedSeatKeys()
+    public List<Seat> getSeats() {
+        return sortedSeatKeys()
                 .map(seatsMap::get)
-                .forEachOrdered(Seat::view);
-        LoggingUtil.info("Successfully displayed all seats information for Show #" + this.number);
+                .collect(Collectors.toList());
     }
 
     public void available() {

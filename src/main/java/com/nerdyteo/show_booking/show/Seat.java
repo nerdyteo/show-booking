@@ -19,12 +19,12 @@ public class Seat {
 
     public void view() {
         if (isBooked()) {
-            LoggingUtil.println("* ", this.seatNumber, "[BOOKED]");
-            LoggingUtil.println("\t\tTicket Information:");
-            LoggingUtil.println("\t\t\tTicket #: " + this.booking.getTicketNumber());
-            LoggingUtil.println("\t\t\tPhone Number #:" + this.booking.getPhoneNumber());
+            LoggingUtil.println("\t* ", this.seatNumber, " [BOOKED]");
+            LoggingUtil.println("\t\t\tTicket Information:");
+            LoggingUtil.println("\t\t\t\tTicket #: " + this.booking.getTicketNumber());
+            LoggingUtil.println("\t\t\t\tPhone Number #:" + this.booking.getPhoneNumber());
         } else
-            LoggingUtil.println("* ", this.seatNumber, "[NOT BOOKED]");
+            LoggingUtil.println("\t* ", this.seatNumber, " [NOT BOOKED]");
     }
 
     public String getSeatNumber() {

@@ -2,10 +2,12 @@ package com.nerdyteo.show_booking.mode.admin.module;
 
 import com.nerdyteo.show_booking.mode.buyer.BuyerMode;
 import com.nerdyteo.show_booking.show.Cinema;
+import com.nerdyteo.show_booking.show.Seat;
 import com.nerdyteo.show_booking.util.ConversionUtil;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ViewShowModule implements AdminModule {
     private static volatile ViewShowModule instance;
@@ -23,7 +25,13 @@ public class ViewShowModule implements AdminModule {
             return;
         }
 
-        Cinema.getInstance().view(showNumber);
+        final List<Seat> seats = Cinema.getInstance().getSeats(showNumber);
+        if (seats != null) {
+            LoggingUtil.info("All Seats Information for Show #" + showNumber + ":");
+            seats.stream()
+                    .forEachOrdered(Seat::view);
+            LoggingUtil.info("Successfully displayed all seats information");
+        }
     }
 
     public static ViewShowModule getInstance() {

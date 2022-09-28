@@ -4,6 +4,7 @@ import com.nerdyteo.show_booking.mode.buyer.BuyerMode;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class Cinema {
@@ -54,13 +55,13 @@ public class Cinema {
         LoggingUtil.info("Successfully added Show #" + showNumber + " that has " + numberOfRows + " rows with " + numberOfSeats + " seats and a cancellation window of " + cancellationWindowsMinutes + " minutes.");
     }
 
-    public void view(final long showNumber) {
+    public List<Seat> getSeats(final long showNumber) {
         if (!this.showMapping.containsKey(showNumber)) {
             LoggingUtil.error("Show #" + showNumber + " does not exist.");
-            return;
+            return null;
         }
 
-        this.showMapping.get(showNumber).viewAll();
+        return this.showMapping.get(showNumber).getSeats();
     }
 
     public void available() {
