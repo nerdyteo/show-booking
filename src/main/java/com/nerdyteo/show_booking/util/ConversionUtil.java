@@ -1,11 +1,24 @@
 package com.nerdyteo.show_booking.util;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ConversionUtil {
+
+    private static final MessageDigest sha1;
+
+    static {
+        try {
+            sha1 = MessageDigest.getInstance("SHA-1");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static Long toLong(final String value) {
         try {
@@ -27,5 +40,18 @@ public class ConversionUtil {
         return Arrays.stream(value.split(delimiter))
                 .map(convert)
                 .collect(Collectors.toList());
+    }
+
+    public static String sha1(final String value) {
+        return convertByteArrayToHexString(sha1.digest(value.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    private static String convertByteArrayToHexString(byte[] arrayBytes) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < arrayBytes.length; i++) {
+            stringBuffer.append(Integer.toString((arrayBytes[i] & 0xff) + 0x100, 16)
+                    .substring(1));
+        }
+        return stringBuffer.toString();
     }
 }
