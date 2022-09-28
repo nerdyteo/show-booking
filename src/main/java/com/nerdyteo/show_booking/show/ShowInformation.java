@@ -15,10 +15,12 @@ public class ShowInformation {
     private final long number;
     private final int cancellationWindowsMinutes;
     private final Map<String, Seat> seatsMap;
+    private final HashMap<String, DateTime> ticketWindowMapping;
 
     public ShowInformation(long number, int numberOfRows, int numberOfSeats, int cancellationWindowMinutes) {
         this.number = number;
         this.cancellationWindowsMinutes = cancellationWindowMinutes;
+        this.ticketWindowMapping = new HashMap<>();
 
         final int alphabetA = 'A';
         final HashMap<String, Seat> seatMapBuffer = new HashMap<>();
@@ -67,7 +69,8 @@ public class ShowInformation {
         final DateTime cancellableWindow = now.plusMinutes(this.cancellationWindowsMinutes);
         seats.stream()
                 .map(seatsMap::get)
-                .forEachOrdered(seat -> seat.book(ticketNumber, phoneNumber, cancellableWindow));
+                .forEachOrdered(seat -> seat.book(ticketNumber, phoneNumber));
+        this.ticketWindowMapping.put(ticketNumber, cancellableWindow);
     }
 
     private Stream<String> sortedSeatKeys() {

@@ -6,12 +6,10 @@ import org.joda.time.DateTime;
 public class Ticket {
     private final String ticketNumber;
     private final String phoneNumber;
-    private final DateTime cancellationWindow;
 
-    public Ticket(final String ticketNumber, final String phoneNumber, final DateTime cancellationWindow) {
+    public Ticket(final String ticketNumber, final String phoneNumber) {
         this.ticketNumber = ticketNumber;
         this.phoneNumber = phoneNumber;
-        this.cancellationWindow = cancellationWindow;
     }
 
     public String getPhoneNumber() {
@@ -22,8 +20,4 @@ public class Ticket {
         return ticketNumber;
     }
 
-    public boolean isCancellable() {
-        final DateTime now = DateTime.now();
-        return now.isBefore(this.cancellationWindow);
-    }
 }
