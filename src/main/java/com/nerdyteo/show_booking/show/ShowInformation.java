@@ -44,12 +44,11 @@ public class ShowInformation {
                 .collect(Collectors.toList());
     }
 
-    public void available() {
-        LoggingUtil.info("Available seats for Show #" + this.number + ":");
-        sortedSeatKeys()
+    public List<Seat> available() {
+        return sortedSeatKeys()
                 .map(seatsMap::get)
                 .filter(seat -> !seat.isBooked())
-                .forEachOrdered(seat -> LoggingUtil.println("* ", seat.getSeatNumber()));
+                .collect(Collectors.toList());
     }
 
     public boolean hasSeat(String seatNumber) {

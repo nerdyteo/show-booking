@@ -75,12 +75,12 @@ public class Cinema {
         LoggingUtil.info("Successfully displayed all shows");
     }
 
-    public void available(final long showNumber) {
+    public List<Seat> available(final long showNumber) {
         if (!this.showMapping.containsKey(showNumber)) {
             LoggingUtil.error("Show #" + showNumber + " does not exist.");
-            return;
+            return null;
         }
-        this.showMapping.get(showNumber).available();
+        return this.showMapping.get(showNumber).available();
     }
 
     public static Cinema getInstance() {
