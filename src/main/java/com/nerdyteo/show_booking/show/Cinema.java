@@ -2,11 +2,15 @@ package com.nerdyteo.show_booking.show;
 
 import com.nerdyteo.show_booking.mode.buyer.BuyerMode;
 import com.nerdyteo.show_booking.util.LoggingUtil;
+import com.nerdyteo.show_booking.util.TicketUtil;
+import org.joda.time.DateTime;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Cinema {
     private static volatile Cinema instance;
@@ -75,6 +79,33 @@ public class Cinema {
             return null;
         }
         return this.showMapping.get(showNumber).available();
+    }
+
+    public String book(final long showNumber, final String phoneNumber, final List<String> seats) {
+        if (!this.showMapping.containsKey(showNumber)) {
+            LoggingUtil.error("Show #" + showNumber + " does not exist.");
+            return null;
+        }
+        final DateTime now = DateTime.now();
+
+        final ShowInformation showInformation = this.showMapping.get(showNumber);
+        final List<String> validatedSeats = seats.stream()
+                .filter(showInformation::hasAvailableSeat)
+                .collect(Collectors.toList());
+
+        if (validatedSeats.isEmpty()) {
+            LoggingUtil.error("No valid seats had been entered");
+            return null;
+        }
+
+        final String ticketNumber = TicketUtil.convert(showNumber, phoneNumber, seats);
+        try {
+            showInformation.book(ticketNumber, phoneNumber, seats, now);
+            return ticketNumber;
+        } catch (Exception error) {
+            LoggingUtil.error("Failed to book ticket. Message: " + error.getMessage());
+            return null;
+        }
     }
 
     public static Cinema getInstance() {

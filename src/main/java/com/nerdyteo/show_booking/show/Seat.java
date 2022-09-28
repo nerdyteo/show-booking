@@ -2,6 +2,7 @@ package com.nerdyteo.show_booking.show;
 
 import com.nerdyteo.show_booking.show.Ticket;
 import com.nerdyteo.show_booking.util.LoggingUtil;
+import org.joda.time.DateTime;
 
 public class Seat {
 
@@ -15,6 +16,10 @@ public class Seat {
 
     public boolean isBooked() {
         return this.booking != null;
+    }
+
+    public void book(final String ticketNumber, final String phoneNumber, final DateTime cancellationWindow) {
+        this.booking = new Ticket(ticketNumber, phoneNumber, cancellationWindow);
     }
 
     public void view() {

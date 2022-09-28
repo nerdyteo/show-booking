@@ -2,7 +2,9 @@ package com.nerdyteo.show_booking.show;
 
 
 import com.nerdyteo.show_booking.util.LoggingUtil;
+import org.joda.time.DateTime;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -11,13 +13,11 @@ import java.util.stream.Stream;
 public class ShowInformation {
 
     private final long number;
-    private final int numberOfSeats;
     private final int cancellationWindowsMinutes;
     private final Map<String, Seat> seatsMap;
 
     public ShowInformation(long number, int numberOfRows, int numberOfSeats, int cancellationWindowMinutes) {
         this.number = number;
-        this.numberOfSeats = numberOfSeats;
         this.cancellationWindowsMinutes = cancellationWindowMinutes;
 
         final int alphabetA = 'A';
@@ -53,6 +53,21 @@ public class ShowInformation {
 
     public boolean hasSeat(String seatNumber) {
         return this.seatsMap.containsKey(seatNumber);
+    }
+
+    public boolean hasAvailableSeat(String seatNumber) {
+        final Seat seat = this.seatsMap.get(seatNumber);
+        if (seat == null)
+            return false;
+
+        return !seat.isBooked();
+    }
+
+    public void book(final String ticketNumber, final String phoneNumber, final List<String> seats, final DateTime now) {
+        final DateTime cancellableWindow = now.plusMinutes(this.cancellationWindowsMinutes);
+        seats.stream()
+                .map(seatsMap::get)
+                .forEachOrdered(seat -> seat.book(ticketNumber, phoneNumber, cancellableWindow));
     }
 
     private Stream<String> sortedSeatKeys() {
