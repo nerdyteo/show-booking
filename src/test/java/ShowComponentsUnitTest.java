@@ -1,4 +1,5 @@
 import com.nerdyteo.show_booking.show.Cinema;
+import com.nerdyteo.show_booking.show.Seat;
 import com.nerdyteo.show_booking.show.ShowInformation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -52,8 +53,9 @@ public class ShowComponentsUnitTest {
         cinema.book(showNumber, "9999", seatsToBook);
         final boolean result = cinema.available(showNumber)
                 .stream()
-                .anyMatch(seatsToBook::contains);
-        Assertions.assertFalse(result, "Not all seats have been booked");
+                .map(Seat::getSeatNumber)
+                .noneMatch(seatsToBook::contains);
+        Assertions.assertTrue(result, "Not all seats have been booked");
     }
 
     @Test
