@@ -1,18 +1,15 @@
 import com.nerdyteo.show_booking.show.Cinema;
-import com.nerdyteo.show_booking.show.Seat;
 import com.nerdyteo.show_booking.show.ShowInformation;
-import org.joda.time.DateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class TestShowComponents {
+public class ShowComponentsUnitTest {
 
     @Test
     void setUpShowClass() {
