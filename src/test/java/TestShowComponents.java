@@ -58,5 +58,16 @@ public class TestShowComponents {
                 .anyMatch(seatsToBook::contains);
         Assertions.assertEquals(false, result, "Not all seats have been booked");
     }
-    
+
+    @Test
+    void bookingNonValidSeats(){
+        final long showNumber = 1211;
+        final int numberOfRows = 4;
+        final int numberOfSeats = 4;
+        final Cinema cinema = Cinema.getInstance();
+        cinema.setup(showNumber, numberOfRows, numberOfSeats, 2);
+        final List<String> seatsToBook = Arrays.asList("Z1", "Y4", "X2", "W3");
+        final String ticketNumber = cinema.book(showNumber, "999", seatsToBook);
+        Assertions.assertEquals(null, ticketNumber, "Ticket number is given despite invalid seats are chosen");
+    }
 }
