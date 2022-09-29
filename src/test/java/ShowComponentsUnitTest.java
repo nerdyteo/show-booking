@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -103,6 +105,30 @@ public class ShowComponentsUnitTest {
         final boolean result = seatsToBook.stream()
                 .allMatch(availableSeats::contains);
         Assertions.assertTrue(result, "Seats from ticket are not available after cancellation");
+    }
+
+    @Test
+    void cancellationWindowFunctioning() throws InterruptedException {
+        final Long showNumber = 1211L;
+        final int numberOfRows = 4;
+        final int numberOfSeats = 4;
+        final int cancellationWindowMinutes = 1;
+        final long cancellationWindowMillis = TimeUnit.MINUTES.toMillis(cancellationWindowMinutes + 1);
+
+        final List<String> seatsToBook = Arrays.asList("A1", "B4", "C2", "D3");
+
+        final Cinema cinema = Cinema.getInstance();
+        cinema.setup(showNumber, numberOfRows, numberOfSeats, cancellationWindowMinutes);
+        final String ticketNumber = cinema.book(showNumber, "9999", seatsToBook);
+        Thread.sleep(cancellationWindowMillis);
+        cinema.cancel(ticketNumber, String.valueOf(showNumber.hashCode()));
+        final List<String> availableSeats = cinema.available(showNumber)
+                .stream()
+                .map(Seat::getSeatNumber)
+                .collect(Collectors.toList());
+        final boolean result = seatsToBook.stream()
+                .noneMatch(availableSeats::contains);
+        Assertions.assertTrue(result, "Seats from ticket are available when ticket is cancelled after the cancellation window");
     }
 
 }
