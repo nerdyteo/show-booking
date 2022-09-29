@@ -103,8 +103,10 @@ public class Cinema {
 
         final String ticketNumber = TicketUtil.convert(showNumber, phoneNumber, seats);
         try {
-            showInformation.book(ticketNumber, phoneNumber, seats, now);
-            return ticketNumber;
+            if (showInformation.book(ticketNumber, phoneNumber, seats, now))
+                return ticketNumber;
+            else
+                return null;
         } catch (Exception error) {
             LoggingUtil.error("Failed to book ticket. Message: " + error.getMessage());
             return null;

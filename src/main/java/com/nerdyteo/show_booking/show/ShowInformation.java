@@ -4,10 +4,7 @@ package com.nerdyteo.show_booking.show;
 import com.nerdyteo.show_booking.util.LoggingUtil;
 import org.joda.time.DateTime;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -17,11 +14,13 @@ public class ShowInformation {
     private final long number;
     private final int cancellationWindowsMinutes;
     private final Map<String, Seat> seatsMap;
+    private final HashSet<String> phoneNumbers;
     private final HashMap<String, DateTime> ticketWindowMapping;
 
     public ShowInformation(long number, int numberOfRows, int numberOfSeats, int cancellationWindowMinutes) {
         this.number = number;
         this.cancellationWindowsMinutes = cancellationWindowMinutes;
+        this.phoneNumbers = new HashSet<>();
         this.ticketWindowMapping = new HashMap<>();
 
         final int alphabetA = 'A';
@@ -67,12 +66,18 @@ public class ShowInformation {
         return !seat.isBooked();
     }
 
-    public void book(final String ticketNumber, final String phoneNumber, final List<String> seats, final DateTime now) {
+    public boolean book(final String ticketNumber, final String phoneNumber, final List<String> seats, final DateTime now) {
+        if (this.phoneNumbers.contains(phoneNumber)) {
+            LoggingUtil.error("Phone Number [" + phoneNumber + "] had already been utilized. Please utilize another Phone Number instead.");
+            return false;
+        }
         final DateTime cancellableWindow = now.plusMinutes(this.cancellationWindowsMinutes);
         seats.stream()
                 .map(seatsMap::get)
                 .forEachOrdered(seat -> seat.book(ticketNumber, phoneNumber));
         this.ticketWindowMapping.put(ticketNumber, cancellableWindow);
+        this.phoneNumbers.add(phoneNumber);
+        return true;
     }
 
     public List<String> cancel(final String ticketNumber) {
