@@ -85,6 +85,20 @@ public class ShowComponentsUnitTest {
     }
 
     @Test
+    void bookingWithSamePhoneNumber() {
+        final Long showNumber = 1211L;
+        final int numberOfRows = 4;
+        final int numberOfSeats = 4;
+        final String phone = "999";
+        final Cinema cinema = Cinema.getInstance();
+        cinema.setup(showNumber, numberOfRows, numberOfSeats, 2);
+        cinema.book(showNumber, phone, Arrays.asList("A1"));
+        final List<String> seats = Arrays.asList("A2");
+        final String ticketNumber = cinema.book(showNumber, phone, seats);
+        Assertions.assertNull(ticketNumber, "Ticket number is given despite using the same phone to book more than once");
+    }
+
+    @Test
     void cancelTicket() {
         final Long showNumber = 1211L;
         final int numberOfRows = 4;
