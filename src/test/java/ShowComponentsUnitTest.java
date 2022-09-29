@@ -1,6 +1,8 @@
 import com.nerdyteo.show_booking.show.Cinema;
+import com.nerdyteo.show_booking.show.ParsedTicketNumber;
 import com.nerdyteo.show_booking.show.Seat;
 import com.nerdyteo.show_booking.show.ShowInformation;
+import com.nerdyteo.show_booking.util.TicketUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -82,4 +84,25 @@ public class ShowComponentsUnitTest {
         final String ticketNumber = cinema.book(showNumber, "9999", seatsToBook);
         Assertions.assertNull(ticketNumber, "Ticket number is given despite unavailable seats are chosen");
     }
+
+    @Test
+    void cancelTicket() {
+        final Long showNumber = 1211L;
+        final int numberOfRows = 4;
+        final int numberOfSeats = 4;
+        final String phone = "999";
+        final Cinema cinema = Cinema.getInstance();
+        cinema.setup(showNumber, numberOfRows, numberOfSeats, 2);
+        final List<String> seatsToBook = Arrays.asList("A1", "B4", "C2", "D3");
+        final String ticketNumber = cinema.book(showNumber, phone, seatsToBook);
+        cinema.cancel(ticketNumber, String.valueOf(showNumber.hashCode()));
+        final List<String> availableSeats = cinema.available(showNumber)
+                .stream()
+                .map(Seat::getSeatNumber)
+                .collect(Collectors.toList());
+        final boolean result = seatsToBook.stream()
+                .allMatch(availableSeats::contains);
+        Assertions.assertTrue(result, "Seats from ticket are not available after cancellation");
+    }
+
 }
