@@ -1,15 +1,12 @@
 import com.nerdyteo.show_booking.show.Cinema;
-import com.nerdyteo.show_booking.show.ParsedTicketNumber;
 import com.nerdyteo.show_booking.show.Seat;
 import com.nerdyteo.show_booking.show.ShowInformation;
-import com.nerdyteo.show_booking.util.TicketUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -102,8 +99,7 @@ public class ShowComponentsUnitTest {
                 .stream()
                 .map(Seat::getSeatNumber)
                 .collect(Collectors.toList());
-        final boolean result = seatsToBook.stream()
-                .allMatch(availableSeats::contains);
+        final boolean result = availableSeats.containsAll(seatsToBook);
         Assertions.assertTrue(result, "Seats from ticket are not available after cancellation");
     }
 
